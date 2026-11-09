@@ -36,15 +36,15 @@ Create one stratified split of approximately 70% training, 15% validation, and 1
 
 ## Notebook run order
 
-The `notebooks` folder is currently empty. Create or name the notebooks in this order so each stage uses the decisions and outputs of the previous stage:
+Run the existing notebooks in this order so each stage uses the decisions and outputs of the previous stage:
 
-1. `01_data_audit_and_eda.ipynb` — Load and verify the dataset, audit data quality, explore class imbalance and feature distributions, and create/save the fixed stratified split.
-2. `02_statistical_baselines.ipynb` — Implement the Z-score and IQR baselines, fit reference statistics on training data, and select thresholds using validation data.
+1. `01_data_aduit_and_exploratary_check.ipynb` — Load and verify the dataset, audit data quality, explore class imbalance and feature distributions, and create/save the fixed stratified split.
+2. `02_statistical_baselines.ipynb` — Implement the Z-score and IQR baselines, fit reference statistics on training data, select thresholds using validation data, and save the thresholds, statistics, and validation metrics to `results/statistical_baselines.json`.
 3. `03_isolation_forest.ipynb` — Train the unsupervised Isolation Forest and evaluate/choose its threshold on validation data.
 4. `04_random_forest.ipynb` — Train the class-weighted Random Forest using training labels; report it as a supervised benchmark.
 5. `05_autoencoder.ipynb` — Train a small autoencoder on legitimate training transactions and select its threshold using validation data.
 6. `06_hybrid_and_validation_comparison.ipynb` — Normalize the statistical and unsupervised anomaly scores, form the equal-weight hybrid, and freeze model settings and thresholds based on validation results.
-7. `07_final_test_evaluation.ipynb` — Run the frozen methods once on the untouched test split and produce the final metrics, plots, and comparison table.
+7. `07_final_test_evaluation.ipynb` — After all decisions are frozen, run the statistical-baseline test evaluation once on the untouched test split. It reuses the saved validation thresholds and training statistics and writes JSON/CSV results to `results/`.
 
 Run each notebook from top to bottom in a fresh kernel. Do not use test results to revise preprocessing, models, score normalization, or thresholds.
 

@@ -1,0 +1,26 @@
+{
+  "z_score": {
+    "threshold": 0.5333333333333333,
+    "precision": 0.5,
+    "recall": 0.16216216216216217,
+    "f1": 0.24489795918367346,
+    "average_precision": 0.22520805294510007,
+    "false_positive_rate": 0.0002813731007315701,
+    "true_negatives": 42636,
+    "false_positives": 12,
+    "false_negatives": 62,
+    "true_positives": 12
+  },
+  "iqr": {
+    "threshold": 0.5666666666666667,
+    "precision": 0.4528301886792453,
+    "recall": 0.32432432432432434,
+    "f1": 0.3779527559055118,
+    "average_precision": 0.2910030810313575,
+    "false_positive_rate": 0.0006799849934346277,
+    "true_negatives": 42619,
+    "false_positives": 29,
+    "false_negatives": 50,
+    "true_positives": 24
+  }
+}
