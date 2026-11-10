@@ -3,6 +3,7 @@
 This project compares statistical, unsupervised machine-learning, and supervised methods for detecting fraudulent credit-card transactions. It is a reproducible academic benchmark, not a production banking system.
 
 See the [project plan](workflow%20scope/plan.md) and [step-by-step guide](workflow%20scope/step-by-step-guide.md) for the full scope and workflow.
+See the [November 9 progress update](workflow%20scope/progress-update-2026-11-09.md) for implementation status and next steps.
 
 ## Setup
 
