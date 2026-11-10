@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+import joblib
 import numpy as np
 import pandas as pd
 from sklearn.metrics import (
@@ -18,6 +19,8 @@ DATA_PATH = PROJECT_ROOT / "data" / "creditcard.csv"
 RESULTS_DIR = PROJECT_ROOT / "results"
 SPLIT_PATH = RESULTS_DIR / "split_indices.npz"
 RECORD_PATH = RESULTS_DIR / "statistical_baselines.json"
+ISOLATION_FOREST_PATH = RESULTS_DIR / "isolation_forest.joblib"
+ISOLATION_FOREST_CONFIG_PATH = RESULTS_DIR / "isolation_forest_config.json"
 
 
 def evaluate_scores(y_true, scores, threshold):
@@ -41,11 +44,18 @@ def evaluate_scores(y_true, scores, threshold):
 
 
 def main():
-    for required_path in (DATA_PATH, SPLIT_PATH, RECORD_PATH):
+    for required_path in (
+        DATA_PATH,
+        SPLIT_PATH,
+        RECORD_PATH,
+        ISOLATION_FOREST_PATH,
+        ISOLATION_FOREST_CONFIG_PATH,
+    ):
         if not required_path.exists():
             raise FileNotFoundError(
                 f"Required file not found: {required_path}. "
-                "Run the data audit/split and statistical-baselines notebooks first."
+                "Run the data audit/split, statistical-baselines, and "
+                "Isolation Forest notebooks first."
             )
 
     with RECORD_PATH.open(encoding="utf-8") as file:
@@ -105,8 +115,34 @@ def main():
         ),
     }
 
-    json_path = RESULTS_DIR / "statistical_baselines_test_results.json"
-    csv_path = RESULTS_DIR / "statistical_baselines_test_results.csv"
+    with ISOLATION_FOREST_CONFIG_PATH.open(encoding="utf-8") as file:
+        isolation_forest_config = json.load(file)
+
+    if isolation_forest_config.get("random_seed") != SEED:
+        raise ValueError(
+            f"Expected Isolation Forest random seed {SEED}; saved record has "
+            f"{isolation_forest_config.get('random_seed')!r}."
+        )
+
+    isolation_feature_cols = isolation_forest_config.get("feature_cols")
+    if isolation_feature_cols != feature_cols:
+        raise ValueError(
+            "Isolation Forest feature columns do not match the statistical "
+            "baseline feature columns."
+        )
+
+    isolation_threshold = isolation_forest_config.get("threshold")
+    if not isinstance(isolation_threshold, (int, float)):
+        raise ValueError("Saved Isolation Forest threshold is missing or invalid.")
+
+    isolation_forest = joblib.load(ISOLATION_FOREST_PATH)
+    isolation_test_scores = -isolation_forest.decision_function(X_test)
+    test_results["isolation_forest"] = evaluate_scores(
+        y_test, isolation_test_scores, isolation_threshold
+    )
+
+    json_path = RESULTS_DIR / "anomaly_baselines_test_results.json"
+    csv_path = RESULTS_DIR / "anomaly_baselines_test_results.csv"
     with json_path.open("w", encoding="utf-8") as file:
         json.dump(test_results, file, indent=2)
     pd.DataFrame.from_dict(test_results, orient="index").rename_axis("method").to_csv(
