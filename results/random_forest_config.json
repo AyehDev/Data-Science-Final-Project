@@ -1,0 +1,77 @@
+{
+  "model_type": "Supervised class-weighted Random Forest",
+  "training_label_access": "The model was trained using fraud labels; unlike the unsupervised detectors, it is a supervised benchmark.",
+  "random_seed": 42,
+  "feature_cols": [
+    "Time",
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7",
+    "V8",
+    "V9",
+    "V10",
+    "V11",
+    "V12",
+    "V13",
+    "V14",
+    "V15",
+    "V16",
+    "V17",
+    "V18",
+    "V19",
+    "V20",
+    "V21",
+    "V22",
+    "V23",
+    "V24",
+    "V25",
+    "V26",
+    "V27",
+    "V28",
+    "Amount"
+  ],
+  "model_selection_metric": "validation average precision",
+  "selected_parameters": {
+    "n_estimators": 100,
+    "max_depth": 16,
+    "min_samples_leaf": 2,
+    "class_weight": "balanced_subsample"
+  },
+  "candidate_results": [
+    {
+      "parameters": {
+        "n_estimators": 100,
+        "max_depth": 16,
+        "min_samples_leaf": 2,
+        "class_weight": "balanced"
+      },
+      "validation_average_precision": 0.8073431362308398
+    },
+    {
+      "parameters": {
+        "n_estimators": 100,
+        "max_depth": 16,
+        "min_samples_leaf": 2,
+        "class_weight": "balanced_subsample"
+      },
+      "validation_average_precision": 0.810990749809324
+    }
+  ],
+  "validation_metrics": {
+    "threshold": 0.549585516420921,
+    "threshold_selection": "Maximum validation F1",
+    "precision": 0.9814814814814815,
+    "recall": 0.7162162162162162,
+    "f1": 0.828125,
+    "average_precision": 0.810990749809324,
+    "false_positive_rate": 2.344830820456304e-05,
+    "true_negatives": 42646,
+    "false_positives": 1,
+    "false_negatives": 21,
+    "true_positives": 53
+  }
+}

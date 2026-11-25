@@ -1,1 +1,9 @@
-#Successfully installed pip-26.2.2
+jupyter
+ipykernel
+joblib
+matplotlib
+numpy
+pandas
+scikit-learn
+seaborn
+torch
