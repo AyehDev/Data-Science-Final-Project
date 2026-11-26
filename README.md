@@ -59,7 +59,6 @@ Notebook 07 uses a relative `%run` path, so its kernel working directory must be
 
 ## Remaining work
 
-- Fix Notebook 01's schema check: its expected column list contains a nested list and currently reports a mismatch even when the columns match.
 - Complete final evaluation for Random Forest, autoencoder, and hybrid. Apply the saved validation thresholds and fit-time artifacts. For the hybrid, map test scores against the saved validation rank references using a documented tie-handling convention consistent with validation; do not rank the test set against itself.
 - Freeze the evaluation procedure and preserve existing results before running the final comparison. Document the previous test exposure and any experiment changes.
 - Produce a final comparison table, precision-recall curves, confusion matrices, false-alert counts, and training/scoring times where practical.
